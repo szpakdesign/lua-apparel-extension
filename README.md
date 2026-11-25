@@ -28,3 +28,5 @@ With the panel closed, a 24 px Lua mark in the top right corner opens it again (
 
 - The extension has a Dark version (Figma "7.N.a Extension dark"); only the panel changes, the page being browsed stays as it is.
 - The bar at the bottom is a prototype tool, not part of the extension: Light / Dark, and the states that are hard to reach by clicking (Sign in, Add fails, No outfits). `?theme=dark` opens the dark panel directly.
+- The "more" button beside the heading opens a menu with the account, Settings (opens the Lua prototype) and Sign out (Figma 7.12).
+- As in Chrome, the page's top right corner is rounded next to the open panel and the panel's colour shows behind it; there is no line between the page and the panel.

@@ -26,13 +26,15 @@ body[data-theme="dark"] { --x-chrome: #39393B; --x-chrome-text: #FFFFFF; --x-too
   --x-text-2: rgba(255,255,255,.72); --x-btn-text: rgba(255,255,255,.72); --x-stroke: rgba(255,255,255,.12); --x-card-stroke: rgba(255,255,255,.16); --x-disabled: #2E2B26; --x-on-disabled: #7A7368; --x-toast-text: #1C1A17; --x-check-border: #888888; --x-check-bg: transparent; --x-spin-track: rgba(255,255,255,.14); --x-on-primary-track: rgba(0,0,0,.2); }
 * { box-sizing: border-box; }
 html, body { height: 100%; margin: 0; }
-body { display: flex; padding-bottom: var(--bar-h); background: #fff; color: var(--lua-primary); font: 400 14px/20px Inter, system-ui, sans-serif; -webkit-font-smoothing: antialiased; overflow: hidden; }
+body { display: flex; padding-bottom: var(--bar-h); background: var(--x-chrome); color: var(--lua-primary); font: 400 14px/20px Inter, system-ui, sans-serif; -webkit-font-smoothing: antialiased; overflow: hidden; }
 button { font: inherit; color: inherit; cursor: pointer; }
 :focus-visible { outline: 2px solid var(--lua-primary); outline-offset: 2px; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
 /* The page being browsed: a sample profile, not Lua UI */
-.page { flex: 1; min-width: 0; height: 100%; overflow-y: auto; background: #fff; }
+.page { flex: 1; min-width: 0; height: 100%; overflow-y: auto; background: #fff; transition: border-radius var(--m-enter-m) var(--e-default); }
+/* As in Chrome: the page's corner next to the side panel is rounded and the panel's colour shows behind it (Figma comment 169) */
+body.panel-open .page { border-top-right-radius: 8px; }
 .profile { width: 804px; max-width: calc(100% - 32px); margin: 0 auto; padding: 40px 0 40px; }
 .identity { display: flex; gap: 48px; padding-inline: 24px; min-height: 128px; }
 .identity img { width: 128px; height: 128px; border-radius: 50%; object-fit: cover; flex: none; }
@@ -68,7 +70,7 @@ body.panel-open .tile:not(.is-picked):not(.is-added):hover img { transform: scal
 @keyframes pop { from { opacity: 0; transform: scale(.6); } }
 
 /* The extension: Chrome side panel */
-.panel { flex: none; width: var(--panel); height: 100%; display: flex; flex-direction: column; background: var(--x-chrome); color: var(--x-primary); border-left: 1px solid var(--x-stroke); overflow: hidden; transition: margin-right var(--m-enter-m) var(--e-default), visibility 0s; }
+.panel { flex: none; width: var(--panel); height: 100%; display: flex; flex-direction: column; background: var(--x-chrome); color: var(--x-primary); overflow: hidden; transition: margin-right var(--m-enter-m) var(--e-default), visibility 0s; }
 .panel > * { width: var(--panel); }
 body:not(.panel-open) .panel { margin-right: calc(var(--panel) * -1); visibility: hidden; transition: margin-right var(--m-exit-m) var(--e-exit), visibility 0s var(--m-exit-m); }
 .panel-bar { flex: none; height: 34px; display: flex; align-items: center; justify-content: space-between; padding: 5px 16px 9px; }
@@ -82,7 +84,18 @@ body:not(.panel-open) .panel { margin-right: calc(var(--panel) * -1); visibility
 .tool:active { transform: scale(var(--press)); }
 .panel-body { flex: 1; min-height: 0; padding: 0 8px 8px; }
 .card { position: relative; height: 100%; display: flex; flex-direction: column; gap: 16px; padding: 16px; border: 1px solid var(--x-card-stroke); border-radius: 16px; background: var(--x-surface); transition: background var(--m-enter-m) var(--e-default), border-color var(--m-enter-m) var(--e-default); }
-.card h2 { flex: none; margin: 0; font: 500 20px/28px Inter, sans-serif; }
+.card-head { flex: none; position: relative; display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 32px; }
+.card h2 { flex: 1; margin: 0; font: 500 20px/28px Inter, sans-serif; }
+.more { flex: none; width: 32px; height: 32px; display: grid; place-items: center; padding: 0; border: 0; border-radius: 9999px; background: transparent; color: var(--x-btn-text); transition: background var(--m-feedback) var(--e-default), transform var(--m-feedback) var(--e-default); }
+.more:hover, .more[aria-expanded="true"] { background: var(--x-tool-hover); }
+.more:active { transform: scale(var(--press)); }
+.menu { position: absolute; right: 0; top: 36px; z-index: 4; width: 240px; padding: 4px; border: 1px solid var(--x-stroke); border-radius: 12px; background: var(--x-surface); box-shadow: 0 8px 24px rgba(0,0,0,.14), 0 2px 6px rgba(0,0,0,.08); transform-origin: top right; animation: menu-in var(--m-enter-s) var(--e-enter) both; }
+@keyframes menu-in { from { opacity: 0; transform: scale(var(--pop)); } }
+.menu-user { padding: 8px 12px 6px; }
+.menu-user b { display: block; font-weight: 400; font-size: 14px; line-height: 20px; color: var(--x-primary); }
+.menu-user span { display: block; font-size: 12px; line-height: 16px; color: var(--x-text-2); }
+.menu button, .menu a { width: 100%; height: 32px; display: flex; align-items: center; padding: 0 12px; border: 0; border-radius: 8px; background: transparent; color: var(--x-primary); font-size: 14px; line-height: 20px; text-align: left; text-decoration: none; transition: background var(--m-feedback) var(--e-default); }
+.menu button:hover, .menu a:hover, .menu button:focus-visible, .menu a:focus-visible { background: var(--x-tool-hover); }
 .content { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 16px; overflow-y: auto; scrollbar-width: none; }
 .content.is-centred { justify-content: center; align-items: center; padding-inline: 16px; text-align: center; }
 .content p { margin: 0; color: var(--x-text-2); text-wrap: pretty; }
@@ -198,7 +211,7 @@ body[data-theme="dark"] .demo-bar { --bar-bg: #1C1C1C; --bar-line: rgba(255,255,
   var SYMBOL = '<svg viewBox="0 0 29.4 24" fill="none" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M14.6619 1.90035C18.2304 -0.880343 23.4044 -0.606816 26.7135 2.70525C30.2529 6.24784 30.2652 12.0323 26.7135 15.5872C23.6931 18.6103 20.3804 21.1807 16.9184 23.3688L16.9172 23.3703L16.9092 23.3752C15.5299 24.2137 13.7998 24.2032 12.4596 23.3749L12.4591 23.3748C8.98762 21.2013 5.66039 18.5712 2.67914 15.5872C-0.913713 11.9911 -0.87232 6.25992 2.67914 2.70525C5.95794 -0.576415 11.1219 -0.849321 14.6619 1.90035ZM12.9261 3.63522C10.314 1.78832 6.72111 2.07691 4.38625 4.41386C1.77671 7.02579 1.75941 11.2496 4.38625 13.8788C7.25271 16.7478 10.39 19.2501 13.7185 21.3374C14.2873 21.6869 15.0697 21.7085 15.6425 21.3381L15.9504 21.1381C19.1293 19.063 22.2068 16.6807 25.0062 13.8788C27.6154 11.2673 27.5803 6.99028 25.0062 4.41386C22.6625 2.06805 19.0192 1.8004 16.4016 3.63508C18.4185 6.06717 19.6027 9.16716 19.6031 12.5599L19.6043 12.6539C19.6118 14.6232 18.4688 16.2777 16.833 17.0633C16.1878 17.3833 15.4715 17.5299 14.6644 17.5299C13.9527 17.5299 13.2731 17.3853 12.6509 17.105L12.5272 17.0472C10.8553 16.2343 9.7266 14.5513 9.73579 12.5948C9.73694 9.20012 10.9373 6.0766 12.9261 3.63522ZM14.6638 5.32786C13.1029 7.33688 12.15 9.86012 12.139 12.5838C12.1509 13.5729 12.6964 14.4133 13.4919 14.8264L13.5698 14.8652L13.5712 14.8658C13.9167 15.0384 14.2039 15.1293 14.6659 15.1293C15.1299 15.1293 15.4568 15.0369 15.7572 14.8677L15.7619 14.8652C16.5932 14.4673 17.2046 13.6011 17.1927 12.5824V12.5812C17.2042 9.85628 16.2884 7.34862 14.6638 5.32786Z" fill="currentColor"/></svg>';
   var GOOGLE = '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"> <path d="M17.5 10.3232C17.5 9.69391 17.4489 9.23473 17.3384 8.75854H10.153V11.5986H14.3707C14.2857 12.3045 13.8265 13.3674 12.8061 14.0816L12.7918 14.1767L15.0637 15.9367L15.2211 15.9524C16.6666 14.6174 17.5 12.6531 17.5 10.3232Z" fill="#4285F4" /> <path d="M10.1531 17.8062C12.2194 17.8062 13.954 17.1259 15.2211 15.9525L12.8061 14.0817C12.1599 14.5324 11.2925 14.847 10.1531 14.847C8.12927 14.847 6.4116 13.512 5.79929 11.6667L5.70954 11.6744L3.34721 13.5026L3.31631 13.5885C4.5748 16.0885 7.15984 17.8062 10.1531 17.8062Z" fill="#34A853" /> <path d="M5.79929 11.6667C5.63772 11.1905 5.54422 10.6802 5.54422 10.1531C5.54422 9.62581 5.63773 9.11562 5.79079 8.63944L5.78651 8.53802L3.39457 6.68042L3.31631 6.71764C2.79762 7.75507 2.5 8.92006 2.5 10.1531C2.5 11.386 2.79762 12.551 3.31631 13.5884L5.79929 11.6667Z" fill="#FBBC05" /> <path d="M10.1531 5.45916C11.5901 5.45916 12.5595 6.07991 13.1122 6.59865L15.2721 4.4898C13.9456 3.25681 12.2194 2.5 10.1531 2.5C7.15984 2.5 4.5748 4.21767 3.31631 6.71765L5.79079 8.63945C6.4116 6.79421 8.12927 5.45916 10.1531 5.45916Z" fill="#EB4335" /> </svg>';
   var FIND = 'Find outfits on this page';
-  var s = { view: params.has('signedin') ? 'idle' : 'signin', list: [], off: {}, added: {}, fromFind: false, toast: null, failOnce: params.has('fail') };
+  var s = { view: params.has('signedin') ? 'idle' : 'signin', list: [], off: {}, added: {}, fromFind: false, toast: null, menu: false, failOnce: params.has('fail') };
   var card = document.getElementById('card'), grid = document.getElementById('grid'), page = document.getElementById('page');
   var findTimer = null, toastTimer = null, addTimer = null, hovered = null, lastKey = '', seen = {};
   function src(i) { return '/img/post-' + String(i + 1).padStart(2, '0') + '.jpg'; }
@@ -216,7 +229,9 @@ body[data-theme="dark"] .demo-bar { --bar-bg: #1C1C1C; --bar-line: rgba(255,255,
   }
   var IDLE = '<p>Hover a photo and click Add to Lua,<br>or point at it and press Alt + L.</p><p>You can also find every outfit<br>on this page in one go.</p>';
   function render() {
-    var h = '<h2>' + (s.view === 'signin' ? 'Sign in to Lua' : 'Add to Lua') + '</h2>' + toastHtml();
+    var MORE = '<button class="more" type="button" data-act="menu" aria-label="More" aria-haspopup="menu" aria-expanded="' + (s.menu ? 'true' : 'false') + '"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><circle cx="3.5" cy="8" r="1.1"/><circle cx="8" cy="8" r="1.1"/><circle cx="12.5" cy="8" r="1.1"/></svg></button>';
+    var MENU = s.menu ? '<div class="menu" role="menu" aria-label="Account"><div class="menu-user"><b>Alex Morgan</b><span>alex.morgan@gmail.com</span></div><a role="menuitem" href="https://lua-apparel.vercel.app/?screen=settings" target="_blank" rel="noopener" data-act="menu-close">Settings</a><button role="menuitem" type="button" data-act="signout">Sign out</button></div>' : '';
+    var h = '<div class="card-head"><h2>' + (s.view === 'signin' ? 'Sign in to Lua' : 'Add to Lua') + '</h2>' + (s.view === 'signin' ? '' : MORE + MENU) + '</div>' + toastHtml();
     var key = s.view === 'adding' ? 'list' : (s.view !== 'idle' ? s.view : (s.list.length ? 'list' : 'idle')), fresh = key !== lastKey ? ' is-fresh' : ''; lastKey = key;
     if (s.view === 'signin') {
       h += '<div class="content' + fresh + '"><p>Sign in once and every photo you add goes straight to your concepts.</p><button class="btn btn--solid btn--google" type="button" data-act="signin">' + GOOGLE + 'Continue with Google</button></div>';
@@ -281,6 +296,9 @@ body[data-theme="dark"] .demo-bar { --bar-bg: #1C1C1C; --bar-line: rgba(255,255,
     else if (a === 'cancel-find') { clearTimeout(findTimer); s.view = 'idle'; render(); }
     else if (a === 'clear') { s.list = []; s.off = {}; s.fromFind = false; s.toast = null; render(); }
     else if (a === 'signin') { s.view = 'idle'; render(); }
+    else if (a === 'menu') { s.menu = !s.menu; render(); var f = card.querySelector(s.menu ? '.menu a' : '.more'); if (f) f.focus(); }
+    else if (a === 'menu-close') { s.menu = false; setTimeout(render, 0); }
+    else if (a === 'signout') { clearTimeout(findTimer); clearTimeout(addTimer); s.menu = false; s.view = 'signin'; s.list = []; s.off = {}; s.fromFind = false; s.toast = null; render(); }
   });
   card.addEventListener('change', function (e) {
     var c = e.target.closest('[data-pick]'); if (!c) return; var i = +c.dataset.pick;
@@ -291,6 +309,8 @@ body[data-theme="dark"] .demo-bar { --bar-bg: #1C1C1C; --bar-line: rgba(255,255,
   grid.addEventListener('mouseover', function (e) { var li = e.target.closest('.tile'); hovered = li ? +li.dataset.i : null; });
   grid.addEventListener('mouseleave', function () { hovered = null; });
   document.addEventListener('keydown', function (e) { if (e.altKey && e.code === 'KeyL' && hovered !== null) { e.preventDefault(); pick(hovered); } });
+  document.addEventListener('click', function (e) { if (s.menu && !e.target.closest('.menu') && !e.target.closest('.more')) { s.menu = false; render(); } });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && s.menu) { s.menu = false; render(); var m = card.querySelector('.more'); if (m) m.focus(); } });
   document.getElementById('close').addEventListener('click', function () { document.body.classList.remove('panel-open'); });
   document.getElementById('reopen').addEventListener('click', function () { document.body.classList.add('panel-open'); });
   // Prototype controls
