@@ -23,3 +23,8 @@ States that are hard to reach by clicking open through the address:
 - `?empty` makes the search find nothing (Figma 7.8)
 
 With the panel closed, a 24 px Lua mark in the top right corner opens it again (Figma 7.10).
+
+## Dark mode and the bar at the bottom
+
+- The extension has a Dark version (Figma "7.N.a Extension dark"); only the panel changes, the page being browsed stays as it is.
+- The bar at the bottom is a prototype tool, not part of the extension: Light / Dark, and the states that are hard to reach by clicking (Sign in, Add fails, No outfits). `?theme=dark` opens the dark panel directly.
