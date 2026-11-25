@@ -18,7 +18,7 @@ Static site, no build step. `index.html` is the whole prototype.
 
 States that are hard to reach by clicking open through the address:
 
-- `?signin` starts signed out (Figma 7.6)
+- The prototype starts signed out (Figma 7.7 Sign in); `?signedin` skips it
 - `?fail` makes the first Add fail (Figma 7.7)
 - `?empty` makes the search find nothing (Figma 7.8)
 
