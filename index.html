@@ -144,7 +144,7 @@ body:not(.panel-open) .reopen { display: inline-flex; }
     if (s.toast.kind === 'failed') return '<div class="toast" role="alert">' + bad + '<span>Couldn\'t add the images</span><button type="button" data-act="add">Try again</button></div>';
     return '<div class="toast" role="status"><span>No outfits found on this page</span></div>';
   }
-  var IDLE = '<p>Hover a photo and click Add to Lua, or point at it and press Alt + L.</p><p>You can also find every outfit on this page in one go.</p>';
+  var IDLE = '<p>Hover a photo and click Add to Lua,<br>or point at it and press Alt + L.</p><p>You can also find every outfit<br>on this page in one go.</p>';
   function render() {
     var h = '<h2>' + (s.view === 'signin' ? 'Sign in to Lua' : 'Add to Lua') + '</h2>' + toastHtml();
     if (s.view === 'signin') {
