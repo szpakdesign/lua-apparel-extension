@@ -91,7 +91,30 @@ body:not(.panel-open) .panel { margin-right: calc(var(--panel) * -1); visibility
 .more:active { transform: scale(var(--press)); }
 .menu { position: absolute; right: 0; top: 36px; z-index: 4; width: 240px; padding: 4px; border: 1px solid var(--x-stroke); border-radius: 12px; background: var(--x-surface); box-shadow: 0 8px 24px rgba(0,0,0,.14), 0 2px 6px rgba(0,0,0,.08); transform-origin: top right; animation: menu-in var(--m-enter-s) var(--e-enter) both; }
 @keyframes menu-in { from { opacity: 0; transform: scale(var(--pop)); } }
-.menu-user { padding: 8px 12px 6px; }
+.menu-user { display: flex; align-items: center; gap: 8px; padding: 6px 8px; }
+.menu-user img { flex: none; width: 32px; height: 32px; border-radius: 9999px; object-fit: cover; }
+.menu button svg, .menu a svg { flex: none; width: 16px; height: 16px; margin-right: 8px; }
+.menu button, .menu a { padding-inline: 8px !important; }
+body.no-hover-btn .tile-action { display: none; }
+.back { margin-left: -8px; }
+.card-head.has-back { justify-content: flex-start; }
+.settings { flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; }
+.settings.is-fresh { animation: menu-in var(--m-enter-m) var(--e-enter) both; transform-origin: top center; }
+.set-row { display: flex; align-items: center; gap: 12px; padding: 12px 0; color: var(--x-primary); text-decoration: none; }
+.set-row > div:first-child { flex: 1; min-width: 0; }
+.set-row b { display: block; font-weight: 400; font-size: 14px; line-height: 20px; }
+.set-row span.d { display: block; margin-top: 2px; font-size: 14px; line-height: 20px; color: var(--x-text-2); }
+.set-row--stack { flex-direction: column; align-items: flex-start; gap: 8px; }
+.set-div { height: 1px; margin: 8px 0; background: var(--x-stroke); }
+.kbd { flex: none; padding: 4px 8px; border-radius: 8px; background: var(--x-control); font-size: 14px; line-height: 20px; }
+.switch { flex: none; position: relative; width: 36px; height: 20px; padding: 0; border: 0; border-radius: 9999px; background: var(--x-control); transition: background var(--m-toggle) var(--e-default); }
+.switch::after { content: ''; position: absolute; left: 2px; top: 2px; width: 16px; height: 16px; border-radius: 9999px; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.2); transition: transform var(--m-toggle) var(--e-default); }
+.switch[aria-checked="true"] { background: var(--x-primary); }
+.switch[aria-checked="true"]::after { transform: translateX(16px); background: var(--x-surface); }
+.seg { display: inline-flex; gap: 0; padding: 2px; border-radius: 9999px; background: var(--x-control); }
+.seg button { height: 32px; padding: 0 12px; border: 0; border-radius: 9999px; background: transparent; color: var(--x-text-2); font-size: 14px; line-height: 20px; transition: background var(--m-toggle) var(--e-default), color var(--m-toggle) var(--e-default); }
+.seg button[aria-pressed="true"] { background: var(--x-surface); color: var(--x-primary); box-shadow: 0 1px 2px rgba(0,0,0,.12); }
+.set-row svg { flex: none; width: 16px; height: 16px; color: var(--x-btn-text); }
 .menu-user b { display: block; font-weight: 400; font-size: 14px; line-height: 20px; color: var(--x-primary); }
 .menu-user span { display: block; font-size: 12px; line-height: 16px; color: var(--x-text-2); }
 .menu button, .menu a { width: 100%; height: 32px; display: flex; align-items: center; padding: 0 12px; border: 0; border-radius: 8px; background: transparent; color: var(--x-primary); font-size: 14px; line-height: 20px; text-align: left; text-decoration: none; transition: background var(--m-feedback) var(--e-default); }
@@ -211,7 +234,7 @@ body[data-theme="dark"] .demo-bar { --bar-bg: #1C1C1C; --bar-line: rgba(255,255,
   var SYMBOL = '<svg viewBox="0 0 29.4 24" fill="none" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M14.6619 1.90035C18.2304 -0.880343 23.4044 -0.606816 26.7135 2.70525C30.2529 6.24784 30.2652 12.0323 26.7135 15.5872C23.6931 18.6103 20.3804 21.1807 16.9184 23.3688L16.9172 23.3703L16.9092 23.3752C15.5299 24.2137 13.7998 24.2032 12.4596 23.3749L12.4591 23.3748C8.98762 21.2013 5.66039 18.5712 2.67914 15.5872C-0.913713 11.9911 -0.87232 6.25992 2.67914 2.70525C5.95794 -0.576415 11.1219 -0.849321 14.6619 1.90035ZM12.9261 3.63522C10.314 1.78832 6.72111 2.07691 4.38625 4.41386C1.77671 7.02579 1.75941 11.2496 4.38625 13.8788C7.25271 16.7478 10.39 19.2501 13.7185 21.3374C14.2873 21.6869 15.0697 21.7085 15.6425 21.3381L15.9504 21.1381C19.1293 19.063 22.2068 16.6807 25.0062 13.8788C27.6154 11.2673 27.5803 6.99028 25.0062 4.41386C22.6625 2.06805 19.0192 1.8004 16.4016 3.63508C18.4185 6.06717 19.6027 9.16716 19.6031 12.5599L19.6043 12.6539C19.6118 14.6232 18.4688 16.2777 16.833 17.0633C16.1878 17.3833 15.4715 17.5299 14.6644 17.5299C13.9527 17.5299 13.2731 17.3853 12.6509 17.105L12.5272 17.0472C10.8553 16.2343 9.7266 14.5513 9.73579 12.5948C9.73694 9.20012 10.9373 6.0766 12.9261 3.63522ZM14.6638 5.32786C13.1029 7.33688 12.15 9.86012 12.139 12.5838C12.1509 13.5729 12.6964 14.4133 13.4919 14.8264L13.5698 14.8652L13.5712 14.8658C13.9167 15.0384 14.2039 15.1293 14.6659 15.1293C15.1299 15.1293 15.4568 15.0369 15.7572 14.8677L15.7619 14.8652C16.5932 14.4673 17.2046 13.6011 17.1927 12.5824V12.5812C17.2042 9.85628 16.2884 7.34862 14.6638 5.32786Z" fill="currentColor"/></svg>';
   var GOOGLE = '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"> <path d="M17.5 10.3232C17.5 9.69391 17.4489 9.23473 17.3384 8.75854H10.153V11.5986H14.3707C14.2857 12.3045 13.8265 13.3674 12.8061 14.0816L12.7918 14.1767L15.0637 15.9367L15.2211 15.9524C16.6666 14.6174 17.5 12.6531 17.5 10.3232Z" fill="#4285F4" /> <path d="M10.1531 17.8062C12.2194 17.8062 13.954 17.1259 15.2211 15.9525L12.8061 14.0817C12.1599 14.5324 11.2925 14.847 10.1531 14.847C8.12927 14.847 6.4116 13.512 5.79929 11.6667L5.70954 11.6744L3.34721 13.5026L3.31631 13.5885C4.5748 16.0885 7.15984 17.8062 10.1531 17.8062Z" fill="#34A853" /> <path d="M5.79929 11.6667C5.63772 11.1905 5.54422 10.6802 5.54422 10.1531C5.54422 9.62581 5.63773 9.11562 5.79079 8.63944L5.78651 8.53802L3.39457 6.68042L3.31631 6.71764C2.79762 7.75507 2.5 8.92006 2.5 10.1531C2.5 11.386 2.79762 12.551 3.31631 13.5884L5.79929 11.6667Z" fill="#FBBC05" /> <path d="M10.1531 5.45916C11.5901 5.45916 12.5595 6.07991 13.1122 6.59865L15.2721 4.4898C13.9456 3.25681 12.2194 2.5 10.1531 2.5C7.15984 2.5 4.5748 4.21767 3.31631 6.71765L5.79079 8.63945C6.4116 6.79421 8.12927 5.45916 10.1531 5.45916Z" fill="#EB4335" /> </svg>';
   var FIND = 'Find outfits on this page';
-  var s = { view: params.has('signedin') ? 'idle' : 'signin', list: [], off: {}, added: {}, fromFind: false, toast: null, menu: false, failOnce: params.has('fail') };
+  var s = { view: params.has('signedin') ? 'idle' : 'signin', list: [], off: {}, added: {}, fromFind: false, toast: null, menu: false, hoverBtn: true, theme: 'light', failOnce: params.has('fail') };
   var card = document.getElementById('card'), grid = document.getElementById('grid'), page = document.getElementById('page');
   var findTimer = null, toastTimer = null, addTimer = null, hovered = null, lastKey = '', seen = {};
   function src(i) { return '/img/post-' + String(i + 1).padStart(2, '0') + '.jpg'; }
@@ -229,12 +252,24 @@ body[data-theme="dark"] .demo-bar { --bar-bg: #1C1C1C; --bar-line: rgba(255,255,
   }
   var IDLE = '<p>Hover a photo and click Add to Lua,<br>or point at it and press Alt + L.</p><p>You can also find every outfit<br>on this page in one go.</p>';
   function render() {
+    var GEAR = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="2"/><path d="M8 1.5v1.6M8 12.9v1.6M1.5 8h1.6M12.9 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M3.4 12.6l1.1-1.1M11.5 4.5l1.1-1.1"/></svg>';
+    var OUT = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2.5H3.5a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1H6M10.5 5l3 3-3 3M13.5 8H6"/></svg>';
     var MORE = '<button class="more" type="button" data-act="menu" aria-label="More" aria-haspopup="menu" aria-expanded="' + (s.menu ? 'true' : 'false') + '"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><circle cx="3.5" cy="8" r="1.1"/><circle cx="8" cy="8" r="1.1"/><circle cx="12.5" cy="8" r="1.1"/></svg></button>';
-    var MENU = s.menu ? '<div class="menu" role="menu" aria-label="Account"><div class="menu-user"><b>Alex Morgan</b><span>alex.morgan@gmail.com</span></div><a role="menuitem" href="https://lua-apparel.vercel.app/?screen=settings" target="_blank" rel="noopener" data-act="menu-close">Settings</a><button role="menuitem" type="button" data-act="signout">Sign out</button></div>' : '';
-    var h = '<div class="card-head"><h2>' + (s.view === 'signin' ? 'Sign in to Lua' : 'Add to Lua') + '</h2>' + (s.view === 'signin' ? '' : MORE + MENU) + '</div>' + toastHtml();
+    var MENU = s.menu ? '<div class="menu" role="menu" aria-label="Account"><div class="menu-user"><img src="img/account.jpg" alt=""><div><b>Alex Morgan</b><span>alex.morgan@gmail.com</span></div></div><button role="menuitem" type="button" data-act="settings">' + GEAR + 'Settings</button><button role="menuitem" type="button" data-act="signout">' + OUT + 'Sign out</button></div>' : '';
+    var BACK = '<button class="more back" type="button" data-act="settings-back" aria-label="Back"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 8H3M7 4 3 8l4 4"/></svg></button>';
+    var h = s.view === 'settings' ? '<div class="card-head has-back">' + BACK + '<h2>Settings</h2></div>' : '<div class="card-head"><h2>' + (s.view === 'signin' ? 'Sign in to Lua' : 'Add to Lua') + '</h2>' + (s.view === 'signin' ? '' : MORE + MENU) + '</div>' + toastHtml();
     var key = s.view === 'adding' ? 'list' : (s.view !== 'idle' ? s.view : (s.list.length ? 'list' : 'idle')), fresh = key !== lastKey ? ' is-fresh' : ''; lastKey = key;
     if (s.view === 'signin') {
       h += '<div class="content' + fresh + '"><p>Sign in once and every photo you add goes straight to your concepts.</p><button class="btn btn--solid btn--google" type="button" data-act="signin">' + GOOGLE + 'Continue with Google</button></div>';
+    } else if (s.view === 'settings') {
+      var seg = ['auto', 'light', 'dark'].map(function (t) { return '<button type="button" data-act="theme" data-theme-pref="' + t + '" aria-pressed="' + (s.theme === t ? 'true' : 'false') + '">' + t.charAt(0).toUpperCase() + t.slice(1) + '</button>'; }).join('');
+      h += '<div class="settings' + fresh + '">'
+        + '<div class="set-row"><div><b id="set-hover">Button on photos</b><span class="d">Show Add to Lua when you hover a photo</span></div><button class="switch" type="button" role="switch" aria-labelledby="set-hover" aria-checked="' + (s.hoverBtn ? 'true' : 'false') + '" data-act="hover-btn"></button></div>'
+        + '<div class="set-row"><div><b>Shortcut</b><span class="d">Adds the photo you point at</span></div><span class="kbd">Alt + L</span></div>'
+        + '<div class="set-row set-row--stack"><b>Theme</b><div class="seg" role="group" aria-label="Theme">' + seg + '</div></div>'
+        + '<div class="set-div"></div>'
+        + '<a class="set-row" href="https://lua-apparel.vercel.app/?screen=settings" target="_blank" rel="noopener"><div><b>Lua Apparel settings</b><span class="d">Account and notifications, opens in a new tab</span></div><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 2.5h4v4M13.5 2.5 8 8M11.5 9.5v3a1 1 0 0 1-1 1h-7a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1h3"/></svg></a>'
+        + '</div>';
     } else if (s.view === 'finding') {
       h += '<div class="content is-centred' + fresh + '"><span class="spinner" role="progressbar" aria-label="Looking for outfits"></span><p>Looking for outfits on this page</p></div><div class="footer' + fresh + '"><button class="btn btn--outlined" type="button" data-act="cancel-find">Cancel</button></div>';
     } else if (s.list.length) {
@@ -263,6 +298,7 @@ body[data-theme="dark"] .demo-bar { --bar-bg: #1C1C1C; --bar-line: rgba(255,255,
   function pick(i) {
     if (s.added[i] || s.view === 'signin' || s.view === 'adding' || !document.body.classList.contains('panel-open')) return;
     if (s.view === 'finding') { clearTimeout(findTimer); s.view = 'idle'; }
+    if (s.view === 'settings') s.view = 'idle';
     var at = s.list.indexOf(i);
     if (at === -1) { s.list.push(i); delete s.off[i]; } else if (s.off[i]) { delete s.off[i]; } else { s.list.splice(at, 1); if (!s.list.length) s.fromFind = false; }
     s.toast = null; render();
@@ -297,7 +333,10 @@ body[data-theme="dark"] .demo-bar { --bar-bg: #1C1C1C; --bar-line: rgba(255,255,
     else if (a === 'clear') { s.list = []; s.off = {}; s.fromFind = false; s.toast = null; render(); }
     else if (a === 'signin') { s.view = 'idle'; render(); }
     else if (a === 'menu') { s.menu = !s.menu; render(); var f = card.querySelector(s.menu ? '.menu a' : '.more'); if (f) f.focus(); }
-    else if (a === 'menu-close') { s.menu = false; setTimeout(render, 0); }
+    else if (a === 'settings') { s.menu = false; if (s.view === 'finding') clearTimeout(findTimer); if (s.view !== 'adding') s.view = 'settings'; render(); var bk = card.querySelector('.back'); if (bk) bk.focus(); }
+    else if (a === 'settings-back') { s.view = 'idle'; render(); var mr = card.querySelector('.more'); if (mr) mr.focus(); }
+    else if (a === 'hover-btn') { s.hoverBtn = !s.hoverBtn; document.body.classList.toggle('no-hover-btn', !s.hoverBtn); render(); var sw = card.querySelector('.switch'); if (sw) sw.focus(); }
+    else if (a === 'theme') { applyTheme(b.dataset.themePref); var tb = card.querySelector('.seg [aria-pressed="true"]'); if (tb) tb.focus(); }
     else if (a === 'signout') { clearTimeout(findTimer); clearTimeout(addTimer); s.menu = false; s.view = 'signin'; s.list = []; s.off = {}; s.fromFind = false; s.toast = null; render(); }
   });
   card.addEventListener('change', function (e) {
@@ -316,9 +355,10 @@ body[data-theme="dark"] .demo-bar { --bar-bg: #1C1C1C; --bar-line: rgba(255,255,
   // Prototype controls
   var noOutfits = params.has('empty');
   function setTheme(t) { document.body.dataset.theme = t; [].forEach.call(document.querySelectorAll('[data-theme-set]'), function (b) { b.setAttribute('aria-pressed', b.dataset.themeSet === t ? 'true' : 'false'); }); try { var u = new URLSearchParams(location.search); if (t === 'dark') u.set('theme', 'dark'); else u.delete('theme'); history.replaceState(null, '', location.pathname + (u.toString() ? '?' + u : '')); } catch (e) {} }
+  function applyTheme(pref) { s.theme = pref; setTheme(pref === 'auto' ? (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : pref); render(); }
   function syncDemo() { var on = { signin: s.view === 'signin', fail: s.failOnce, empty: noOutfits }; [].forEach.call(document.querySelectorAll('[data-demo]'), function (b) { b.setAttribute('aria-pressed', on[b.dataset.demo] ? 'true' : 'false'); }); }
   document.querySelector('.demo-bar').addEventListener('click', function (e) {
-    var t = e.target.closest('[data-theme-set]'); if (t) { setTheme(t.dataset.themeSet); return; }
+    var t = e.target.closest('[data-theme-set]'); if (t) { applyTheme(t.dataset.themeSet); return; }
     var d = e.target.closest('[data-demo]'); if (!d) return; document.body.classList.add('panel-open');
     if (d.dataset.demo === 'signin') { s.view = s.view === 'signin' ? 'idle' : 'signin'; s.toast = null; }
     else if (d.dataset.demo === 'fail') s.failOnce = !s.failOnce;
@@ -326,7 +366,7 @@ body[data-theme="dark"] .demo-bar { --bar-bg: #1C1C1C; --bar-line: rgba(255,255,
     render();
   });
   var _render = render; render = function () { _render(); syncDemo(); };
-  setTheme(params.get('theme') === 'dark' ? 'dark' : 'light');
+  s.theme = params.get('theme') === 'dark' ? 'dark' : 'light'; setTheme(s.theme);
   render();
 })();
 </script>
