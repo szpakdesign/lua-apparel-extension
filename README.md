@@ -29,5 +29,5 @@ With the panel closed, a 24 px Lua mark in the top right corner opens it again (
 - The extension has a Dark version (Figma "7.N.a Extension dark"); only the panel changes, the page being browsed stays as it is.
 - The bar at the bottom is a prototype tool, not part of the extension: Light / Dark, and the states that are hard to reach by clicking (Sign in, Add fails, No outfits). `?theme=dark` opens the dark panel directly.
 - The "more" button beside the heading opens a menu with the account (avatar), Settings and Sign out (Figma 7.12).
-- Settings (Figma 7.13) replaces the panel content: Button on photos (switch, hides the hover button; Alt + L still works), Shortcut, Theme (Auto, Light, Dark; the same state as the bar) and a link to the Lua Apparel settings.
+- Settings (Figma 7.13) replaces the panel content: Button on photos (switch, hides the hover button; Alt + L still works), Shortcut, Theme (Auto, Light, Dark; the same state as the bar) and an outlined button that opens the Lua Apparel settings in a new tab.
 - As in Chrome, the page's top right corner is rounded next to the open panel and the panel's colour shows behind it; there is no line between the page and the panel.
