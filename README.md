@@ -12,7 +12,8 @@ Static site, no build step. `index.html` is the whole prototype.
 - Hover a photo: it darkens and shows "Add to Lua". A click, or Alt + L while pointing at it, puts the photo on a ticked list in the panel; a second click takes it off.
 - "Find outfits on this page" lists every photo from the top of the page down to the bottom edge of the window (what has loaded so far).
 - "Add N images" shows the photos loading in the panel (Figma 7.5), then marks them on the page with the small Lua mark in the corner and shows a Toast.
-- A photo on the list carries the same mark; clicking the mark takes it off the list.
+- A photo on the list carries the same mark. Hovering the photo turns the mark into an X; clicking it removes the photo from the list, or from Lua if it was already added (Figma 7.11).
+- The grid has 2 px gaps and only its four outer corners are rounded.
 - Motion uses the Serenity motion tokens (feedback 100 ms, enter 150 and 250 ms, exit 200 ms, stagger 50 ms): hover and press feedback, the button popping in on a photo, list items entering one after another, the Toast and the panel sliding, and none of it under reduced motion.
 
 States that are hard to reach by clicking open through the address:
