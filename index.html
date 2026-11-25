@@ -164,7 +164,7 @@ body:not(.panel-open) .reopen { display: inline-flex; }
     [].forEach.call(grid.children, function (li, i) {
       var picked = s.list.indexOf(i) > -1 && !s.off[i], added = !!s.added[i];
       li.classList.toggle('is-picked', picked && !added); li.classList.toggle('is-added', added);
-      var b = li.querySelector('.tile-action'); b.querySelector('span').textContent = added ? 'Added to Lua' : picked ? 'Selected' : 'Add to Lua';
+      var b = li.querySelector('.tile-action'); b.querySelector('span').textContent = (added || picked) ? 'Added to Lua' : 'Add to Lua';
       b.setAttribute('aria-pressed', picked ? 'true' : 'false'); b.disabled = added;
     });
   }

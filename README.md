@@ -19,4 +19,4 @@ States that are hard to reach by clicking open through the address:
 - `?fail` makes the first Add fail (Figma 7.7)
 - `?empty` makes the search find nothing (Figma 7.8)
 
-Not in Figma: the "Open Lua" button that brings the panel back after closing it, and the "Selected" label on a picked photo.
+Not in Figma: the "Open Lua" button that brings the panel back after closing it.
