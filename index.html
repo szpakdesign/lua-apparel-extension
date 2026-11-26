@@ -122,6 +122,12 @@ body.signed-out .tile-mark { display: none !important; }
 .demo-bar::-webkit-scrollbar { display: none; }
 .demo-sep { flex: none; width: 1px; height: 16px; margin-inline: 4px; background: rgba(0,0,0,.10); }
 .demo-label { flex: none; font-size: 12px; line-height: 16px; color: var(--text-secondary); }
+/* Version switch in the bar: a two-option switch, as ToggleButtonGroup */
+.seg { flex: none; display: inline-flex; padding: 2px; border-radius: 9999px; background: var(--bar-track, rgba(0,0,0,.06)); }
+.seg a { display: inline-flex; align-items: center; justify-content: center; min-width: 40px; height: 28px; padding: 0 12px; border-radius: 9999px; color: var(--bar-text, #4A4A4A); font-size: 14px; line-height: 20px; text-decoration: none; transition: background var(--m-toggle, 150ms) var(--e-default, ease), color var(--m-toggle, 150ms) var(--e-default, ease); }
+.seg a:hover { color: var(--bar-seg-on-text, #1A1A1A); }
+.seg a[aria-current="page"] { background: var(--bar-seg-on, #fff); color: var(--bar-seg-on-text, #1A1A1A); box-shadow: 0 1px 2px rgba(0,0,0,.16); }
+body[data-theme="dark"] .demo-bar { --bar-track: rgba(255,255,255,.10); --bar-seg-on: #4A4A4A; --bar-seg-on-text: #fff; }
 .tag { flex: none; display: inline-flex; align-items: center; height: 32px; padding: 0 10px; border: 0; border-radius: 9999px; background: transparent; box-shadow: inset 0 0 0 1px rgba(0,0,0,.10); color: #4A4A4A; font-size: 14px; line-height: 20px; text-decoration: none; transition: background var(--m-feedback) var(--e-default), transform var(--m-feedback) var(--e-default); }
 .tag:hover { background: rgba(0,0,0,.04); }
 .tag:active { transform: scale(var(--press)); }
@@ -175,9 +181,9 @@ body.panel-open .page { border-top-right-radius: 8px; }
 
 <div class="demo-bar" role="region" aria-label="Prototype controls">
   <span class="demo-label">Version</span>
-  <div role="group" aria-label="Version" style="display:flex;gap:8px">
-    <a class="tag" href="/side-panel.html" data-version>Side panel · Nov 25</a>
-    <a class="tag" href="/" aria-current="page" data-version>Minimal · Nov 26</a>
+  <div class="seg" role="group" aria-label="Version">
+    <a href="/side-panel.html" aria-label="V1, side panel, Nov 25, 2026" data-version>V1</a>
+    <a href="/" aria-current="page" aria-label="V2, minimal, Nov 26, 2026" data-version>V2</a>
   </div>
   <span class="demo-sep" aria-hidden="true"></span>
   <div role="group" aria-label="Show a state" style="display:flex;gap:8px">
@@ -204,7 +210,7 @@ body.panel-open .page { border-top-right-radius: 8px; }
   var INFO_I = '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 9.16667V13.9583M17.5 10C17.5 14.1417 14.1417 17.5 10 17.5C5.85833 17.5 2.5 14.1417 2.5 10C2.5 5.85833 5.85833 2.5 10 2.5C14.1417 2.5 17.5 5.85833 17.5 10ZM10.625 6.04167C10.625 6.38333 10.3417 6.66667 10 6.66667C9.65833 6.66667 9.375 6.38333 9.375 6.04167C9.375 5.7 9.65833 5.41667 10 5.41667C10.3417 5.41667 10.625 5.7 10.625 6.04167Z"/></svg>';
   var CLOSE_I = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6L18 18"/></svg>';
 
-  var s = { view: params.has('signedin') ? 'idle' : 'signin', list: [], added: {}, menu: false, hoverBtn: true, toast: null, failOnce: params.has('fail') };
+  var s = { off: true, view: params.has('signedin') ? 'idle' : 'signin', list: [], added: {}, menu: false, hoverBtn: true, toast: null, failOnce: params.has('fail') };
   var noOutfits = params.has('empty');
   var win = document.getElementById('win'), grid = document.getElementById('grid'), page = document.getElementById('page'), slot = document.getElementById('toast-slot');
   var findTimer = null, addTimer = null, toastTimer = null, hovered = null, lastKey = '';
@@ -345,7 +351,7 @@ body.panel-open .page { border-top-right-radius: 8px; }
   // Prototype controls
   function syncDemo() { var on = { signin: s.view === 'signin', fail: s.failOnce, empty: noOutfits }; [].forEach.call(document.querySelectorAll('[data-demo]'), function (b) { b.setAttribute('aria-pressed', on[b.dataset.demo] ? 'true' : 'false'); }); }
   document.querySelector('.demo-bar').addEventListener('click', function (e) {
-    var d = e.target.closest('[data-demo]'); if (!d) return;
+    var d = e.target.closest('[data-demo]'); if (!d) return; s.off = false;
     if (d.dataset.demo === 'signin') { s.view = s.view === 'signin' ? 'idle' : 'signin'; s.toast = null; s.menu = false; }
     else if (d.dataset.demo === 'fail') s.failOnce = !s.failOnce;
     else noOutfits = !noOutfits;

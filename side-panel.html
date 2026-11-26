@@ -182,13 +182,19 @@ body:not(.panel-open) .reopen { opacity: 1; visibility: visible; transform: scal
 body[data-theme="dark"] .demo-bar { --bar-bg: #1C1C1C; --bar-line: rgba(255,255,255,.14); --bar-text: rgba(255,255,255,.72); --bar-hover: rgba(255,255,255,.08); --bar-on: #F5F5F5; --bar-on-text: #1A1A1A; }
 .reopen { bottom: auto; }
 .demo-label { flex: none; font-size: 12px; line-height: 16px; color: var(--bar-text, rgba(0,0,0,.72)); }
+/* Version switch in the bar: a two-option switch, as ToggleButtonGroup */
+.seg { flex: none; display: inline-flex; padding: 2px; border-radius: 9999px; background: var(--bar-track, rgba(0,0,0,.06)); }
+.seg a { display: inline-flex; align-items: center; justify-content: center; min-width: 40px; height: 28px; padding: 0 12px; border-radius: 9999px; color: var(--bar-text, #4A4A4A); font-size: 14px; line-height: 20px; text-decoration: none; transition: background var(--m-toggle, 150ms) var(--e-default, ease), color var(--m-toggle, 150ms) var(--e-default, ease); }
+.seg a:hover { color: var(--bar-seg-on-text, #1A1A1A); }
+.seg a[aria-current="page"] { background: var(--bar-seg-on, #fff); color: var(--bar-seg-on-text, #1A1A1A); box-shadow: 0 1px 2px rgba(0,0,0,.16); }
+body[data-theme="dark"] .demo-bar { --bar-track: rgba(255,255,255,.10); --bar-seg-on: #4A4A4A; --bar-seg-on-text: #fff; }
 .tag { text-decoration: none; }
 .tag[aria-current="page"] { background: var(--bar-on, #1A1A1A); box-shadow: none; color: var(--bar-on-text, #fff); }
 @media (prefers-reduced-motion: reduce) { * { animation-duration: .01ms !important; transition-duration: .01ms !important; } .spinner { animation: none; } }
 @media (max-width: 900px) { :root { --panel: 320px; } .identity { gap: 24px; } }
 </style>
 </head>
-<body class="panel-open">
+<body>
 
 <main class="page" id="page" aria-label="Sample profile page">
   <div class="profile">
@@ -220,9 +226,9 @@ body[data-theme="dark"] .demo-bar { --bar-bg: #1C1C1C; --bar-line: rgba(255,255,
 </aside>
 <div class="demo-bar" role="region" aria-label="Prototype controls">
   <span class="demo-label">Version</span>
-  <div role="group" aria-label="Version" style="display:flex;gap:8px">
-    <a class="tag" href="/side-panel.html" aria-current="page" data-version>Side panel · Nov 25</a>
-    <a class="tag" href="/" data-version>Minimal · Nov 26</a>
+  <div class="seg" role="group" aria-label="Version">
+    <a href="/side-panel.html" aria-current="page" aria-label="V1, side panel, Nov 25, 2026" data-version>V1</a>
+    <a href="/" aria-label="V2, minimal, Nov 26, 2026" data-version>V2</a>
   </div>
   <span class="demo-sep" aria-hidden="true"></span>
   <div role="group" aria-label="Extension theme" style="display:flex;gap:8px">
