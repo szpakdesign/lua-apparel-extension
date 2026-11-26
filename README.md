@@ -1,9 +1,14 @@
 # Lua Apparel: Chrome extension prototype
 
+Two versions, switched with "Version" in the bar at the bottom (the address's states are kept):
+
+- **Minimal · Nov 26** (`/`, `index.html`): no side panel. A small window 344 px wide, 8 px from the top and right of the page (Figma, section "7. Chrome extension · Simple", component "Extension: Window"). Hover a photo for "Add to Lua" in its centre over a scrim; a click or Alt + L selects it (small Lua mark in the corner, hover shows "Remove" with an X). The window shows the count with "Add N images" and "Unselect all"; "Find all outfits on this page" (Alt + A) selects every photo loaded so far. The Toast sits under the window, as wide as it. Settings and Sign out are in the ··· menu. No dark mode. Shortcuts are set in IBM Plex Mono.
+- **Side panel · Nov 25** (`/side-panel.html`): the first version, described below.
+
 A clickable prototype of the Lua Chrome extension: a sample profile page on the left and the extension's side panel on the right.
 Source of truth: Figma, section "7. Chrome extension" (screens 7.0 to 7.8) in the Lua Apparel file.
 
-Static site, no build step. `index.html` is the whole prototype.
+Static site, no build step. Each version is one HTML file.
 
 ## What the prototype does
 
