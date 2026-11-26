@@ -373,12 +373,23 @@ body[data-theme="dark"] .demo-bar { --bar-track: rgba(255,255,255,.10); --bar-se
   function setTheme(t) { document.body.dataset.theme = t; [].forEach.call(document.querySelectorAll('[data-theme-set]'), function (b) { b.setAttribute('aria-pressed', b.dataset.themeSet === t ? 'true' : 'false'); }); try { var u = new URLSearchParams(location.search); if (t === 'dark') u.set('theme', 'dark'); else u.delete('theme'); history.replaceState(null, '', location.pathname + (u.toString() ? '?' + u : '')); } catch (e) {} }
   function applyTheme(pref) { s.theme = pref; setTheme(pref === 'auto' ? (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : pref); render(); }
   function syncDemo() { var on = { signin: s.view === 'signin', fail: s.failOnce, empty: noOutfits }; [].forEach.call(document.querySelectorAll('[data-demo]'), function (b) { b.setAttribute('aria-pressed', on[b.dataset.demo] ? 'true' : 'false'); }); }
+  var resetTimer = null;
   document.querySelector('.demo-bar').addEventListener('click', function (e) {
     var t = e.target.closest('[data-theme-set]'); if (t) { applyTheme(t.dataset.themeSet); return; }
     var d = e.target.closest('[data-demo]'); if (!d) return; document.body.classList.add('panel-open');
     if (d.dataset.demo === 'signin') { s.view = s.view === 'signin' ? 'idle' : 'signin'; s.toast = null; }
-    else if (d.dataset.demo === 'fail') s.failOnce = !s.failOnce;
-    else noOutfits = !noOutfits;
+    else {
+      // Show the state at once: no further clicks needed
+      clearTimeout(findTimer); clearTimeout(addTimer); clearTimeout(resetTimer); s.toast = null; s.menu = false;
+      if (s.view !== 'idle') s.view = 'idle';
+      if (d.dataset.demo === 'fail') {
+        noOutfits = false;
+        if (!s.list.length) { [].forEach.call(grid.children, function (li, i) { if (s.list.length < 3 && !s.added[i]) s.list.push(i); }); } s.off = {}; s.fromFind = false;
+        s.failOnce = true; render(); add(); return;
+      }
+      s.failOnce = false; s.list = []; s.off = {}; s.fromFind = false; noOutfits = true; render(); find();
+      resetTimer = setTimeout(function () { noOutfits = false; syncDemo(); }, 2400); return;
+    }
     render();
   });
   var _render = render; render = function () { _render(); syncDemo(); };
