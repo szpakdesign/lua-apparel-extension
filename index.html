@@ -66,6 +66,8 @@ body.is-busy .tile::after, body.is-busy .tile-action, body.signed-out .tile::aft
 .reopen svg { width: 12px; height: 10px; }
 .reopen:active { transform: scale(var(--press)); }
 body.ext-off .tile::after, body.ext-off .tile-action, body.ext-off .tile-mark { display: none !important; }
+/* Signed out: nothing of Lua on the photos */
+body.signed-out .tile-mark { display: none !important; }
 .desc { margin: 0; font-size: 16px; line-height: 24px; color: var(--text-secondary); }
 .desc-row { display: flex; align-items: center; gap: 6px; }
 .kbd { display: inline-flex; align-items: center; height: 20px; padding: 0 6px 2px; border-radius: 9999px; background: var(--lua-control); color: var(--text-button); font: 400 12px/18px "IBM Plex Mono", ui-monospace, Menlo, monospace; }
