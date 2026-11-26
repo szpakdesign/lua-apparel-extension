@@ -31,3 +31,4 @@ With the panel closed, a 24 px Lua mark in the top right corner opens it again (
 - The "more" button beside the heading opens a menu with the account (avatar), Settings and Sign out (Figma 7.12).
 - Settings (Figma 7.13) replaces the panel content: Button on photos (switch, hides the hover button; Alt + L still works), Shortcut, Theme (Auto, Light, Dark; the same state as the bar) and an outlined button that opens the Lua Apparel settings in a new tab.
 - As in Chrome, the page's top right corner is rounded next to the open panel and the panel's colour shows behind it; there is no line between the page and the panel.
+- Icons in the panel menu and settings (more, settings, sign-out, arrow-left, external-link) are the Serenity 2 stroke icons, exported from the library (24 px grid, 1.5 stroke, drawn at 16). The menu has a Serenity Separator after the account row: 1 px Stroke/Default with 4 px above and below.
